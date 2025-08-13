@@ -1,8 +1,26 @@
-<script>
-export default {
+<script setup>
+import { ref } from 'vue';
+
+
+
+   const name = ref('Rahat Developer');
+     const status = ref('pending');
+    const  tasks = ref(['one', 'two', 'three']);
+
+    const toggleStatus = ()=> {
+      if(status.value === 'active'){
+        status.value = 'pending'
+      }
+      else if(status.value === 'pending'){
+        status.value = 'inactive'
+      }
+
+      else{
+        status.value = 'active'
+      }
+    };
  
-  
-}
+
 </script>
 
 <template>
