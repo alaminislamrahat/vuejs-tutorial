@@ -1,6 +1,27 @@
 <script>
 export default {
- 
+  data(){
+    return {
+      name : 'Rahat Developer',
+      status : 'pending',
+      tasks : ['one', 'two', 'three'],
+      link : 'https://meet.google.com/landing'
+    }
+  },
+  methods : {
+    toggleStatus(){
+      if(this.status === 'active'){
+        this.status = 'pending'
+      }
+      else if(this.status === 'pending'){
+        this.status = 'inactive'
+      }
+
+      else{
+        this.status = 'active'
+      }
+    }
+  }
   
 }
 </script>
