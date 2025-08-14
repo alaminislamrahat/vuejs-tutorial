@@ -27,6 +27,10 @@ import { ref } from 'vue';
         newTask.value = ''
       }
     }
+
+    const deleTask = (index) => {
+      tasks.value.splice(index, 1)
+    }
  
 
 </script>
@@ -52,7 +56,10 @@ import { ref } from 'vue';
   <h1>Tasks</h1>
   <ul>
     <li v-for="(item, index) in tasks" :key="index">
-      {{ item }}
+     <span>
+       {{ item }}
+     </span>
+     <button @click="deleTask(index)">X</button>
     </li>
   </ul>
   <a :href="link"> click google</a>
