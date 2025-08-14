@@ -6,6 +6,7 @@ import { ref } from 'vue';
    const name = ref('Rahat Developer');
      const status = ref('pending');
     const  tasks = ref(['one', 'two', 'three']);
+    const newTask = ref('')
 
     const toggleStatus = ()=> {
       if(status.value === 'active'){
@@ -19,6 +20,13 @@ import { ref } from 'vue';
         status.value = 'active'
       }
     };
+
+    const addTask = ()=>{
+      if(newTask.value.trim() !== ''){
+        tasks.value.push(newTask.value);
+        newTask.value = ''
+      }
+    }
  
 
 </script>
@@ -32,6 +40,14 @@ import { ref } from 'vue';
  
   <p v-else="status === 'inactive'">user is inactive</p>
   <p>{{ status ? name : '' }}</p>
+
+  <form @submit.prevent="addTask">
+
+    <label for="newTask">Add Task</label>
+    <input type="text" name="newTask" id="newTask" v-model="newTask">
+    <button type="submit">Submit</button>
+
+  </form>
 
   <h1>Tasks</h1>
   <ul>
