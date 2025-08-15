@@ -25,7 +25,7 @@ defineProps({
           >
            {{ title }}
           </h1>
-          <p class="my-4 text-xl text-white">
+          <p class="my-4 text-xl text-white underline">
             {{ subTitle }}
           </p>
         </div>
