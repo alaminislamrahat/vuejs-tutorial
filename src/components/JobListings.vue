@@ -3,6 +3,7 @@ import {  defineProps, onMounted, reactive} from 'vue';
 import JoblistingSingle from './JoblistingSingle.vue';
 import { RouterLink } from 'vue-router';
 import axios from 'axios';
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 defineProps({
     limit : Number,
@@ -39,7 +40,14 @@ onMounted(async()=> {
             <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
                 Browse Jobs
             </h2>
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-3 justify-center items-center">
+
+            <!-- show loading spinner  -->
+             <div v-if="state.isLoading" class="text-center text-gray-500 py-6">
+                <PulseLoader/>
+             </div>
+
+             <!-- show data when loading done  -->
+            <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-3 justify-center items-center">
                 <JoblistingSingle v-for="job in state.jobs.slice(0, limit || state.jobs.length)" :key="job.id" :job="job"/>
                 
             </div>
