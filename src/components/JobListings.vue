@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps, onMounted} from 'vue';
+import {  defineProps, onMounted, reactive} from 'vue';
 import JoblistingSingle from './JoblistingSingle.vue';
 import { RouterLink } from 'vue-router';
 import axios from 'axios';
@@ -12,19 +12,25 @@ defineProps({
     }
 })
 
-const jobs = ref([]);
+const state = reactive({
+    jobs : [],
+    isLoading : true
+})
 
 onMounted(async()=> {
     try{
         const {data} = await axios('http://localhost:8000/jobs')
         console.log(data, 'fetch')
-        jobs.value = data
+        state.jobs = data;
     }
     catch(err){
         console.log(err)
     }
+    finally{
+        state.isLoading = false;
+    }
 })
-console.log('first', jobs.value)
+
 </script>
 
 <template>
@@ -34,7 +40,7 @@ console.log('first', jobs.value)
                 Browse Jobs
             </h2>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-3 justify-center items-center">
-                <JoblistingSingle v-for="job in jobs.slice(0, limit || jobs.length)" :key="job.id" :job="job"/>
+                <JoblistingSingle v-for="job in state.jobs.slice(0, limit || state.jobs.length)" :key="job.id" :job="job"/>
                 
             </div>
         </div>
