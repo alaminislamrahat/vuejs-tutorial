@@ -1,8 +1,8 @@
 <script setup>
-import jobData from '@/jobs.json';
-import { ref, defineProps} from 'vue';
+import { ref, defineProps, onMounted} from 'vue';
 import JoblistingSingle from './JoblistingSingle.vue';
 import { RouterLink } from 'vue-router';
+import axios from 'axios';
 
 defineProps({
     limit : Number,
@@ -12,7 +12,18 @@ defineProps({
     }
 })
 
-const jobs = ref(jobData)
+const jobs = ref([]);
+
+onMounted(async()=> {
+    try{
+        const {data} = await axios('http://localhost:8000/jobs')
+        console.log(data, 'fetch')
+        jobs.value = data
+    }
+    catch(err){
+        console.log(err)
+    }
+})
 console.log('first', jobs.value)
 </script>
 
