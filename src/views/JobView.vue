@@ -3,26 +3,27 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 import { reactive, onMounted } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
 import axios from 'axios';
+import BackButton from '@/components/BackButton.vue';
 
 
 const route = useRoute();
 const jobId = route.params.id;
 const state = reactive({
-    job : {},
-    isLoading : true
+    job: {},
+    isLoading: true
 })
 
 
-onMounted(async()=> {
-    try{
-        const {data} = await axios(`http://localhost:8000/jobs/${jobId}`)
+onMounted(async () => {
+    try {
+        const { data } = await axios(`/api/jobs/${jobId}`)
         console.log(data, 'fetch')
         state.job = data;
     }
-    catch(err){
+    catch (err) {
         console.log(err)
     }
-    finally{
+    finally {
         state.isLoading = false;
     }
 })
@@ -30,10 +31,11 @@ onMounted(async()=> {
 </script>
 
 <template>
-     <!-- show loading spinner  -->
-             <div v-if="state.isLoading" class="text-center text-gray-500 py-6">
-                <PulseLoader/>
-             </div>
+    <BackButton />
+    <!-- show loading spinner  -->
+    <div v-if="state.isLoading" class="text-center text-gray-500 py-6">
+        <PulseLoader />
+    </div>
     <section v-else class="bg-green-50">
         <div class="container m-auto py-10 px-6">
             <div class="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
@@ -53,7 +55,7 @@ onMounted(async()=> {
                         </h3>
 
                         <p class="mb-4">
-                           {{ state.job.description }}
+                            {{ state.job.description }}
                         </p>
 
                         <h3 class="text-green-800 text-lg font-bold mb-2">Salary</h3>
@@ -79,7 +81,7 @@ onMounted(async()=> {
                         <h3 class="text-xl">Contact Email:</h3>
 
                         <p class="my-2 bg-green-100 p-2 font-bold">
-                           {{ state.job.company.contactEmail }}
+                            {{ state.job.company.contactEmail }}
                         </p>
 
                         <h3 class="text-xl">Contact Phone:</h3>
@@ -91,7 +93,8 @@ onMounted(async()=> {
                     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
                         <h3 class="text-xl font-bold mb-6">Manage Job</h3>
                         <RouterLink :to="`/jobs/edit/${state.job.id}`"
-                            class="bg-green-500 hover:bg-green-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">Edit
+                            class="bg-green-500 hover:bg-green-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
+                            Edit
                             Job</RouterLink>
                         <button
                             class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">

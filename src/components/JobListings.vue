@@ -20,7 +20,7 @@ const state = reactive({
 
 onMounted(async()=> {
     try{
-        const {data} = await axios('http://localhost:8000/jobs')
+        const {data} = await axios('/api/jobs')
         console.log(data, 'fetch')
         state.jobs = data;
     }
